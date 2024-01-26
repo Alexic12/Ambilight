@@ -1,24 +1,44 @@
-#include <Arduino.h>
+/**
+ * @file main.cpp
+ * @brief This file contains the main code for the Ambilight system.
+ */
+
+#include <Arduino.h> // Include the Arduino library
 #include "serial_comm.h" // Include the SerialComm class header file
+//#include "led_driver.h"   // Include the LedDriver class header file
 #include "pin_def.h"    // Include the pin definition header
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
+#include <freertos/FreeRTOS.h> // Include the FreeRTOS library
+#include <freertos/task.h>   // Include the task library
 
 // Task functions prototypes
 void BlinkTask(void *pvParameters);
 void SerialTask(void *pvParameters);
 
+/**
+ * @brief The setup function initializes the system.
+ * It configures the serial communication, sets up the status LED pin, and creates the Blink and Serial tasks.
+ */
+
+SerialComm serialComm(BAUD_RATE); // Create a SerialComm object
 
 void setup() {
-  Serial.begin(115200);
-  delay(1000);
+  
+  // Initialize the serial communication
+  serialComm.init();
+  delay(100);
+  serialComm.debugPrint("Debug mode is ON, and system initialization complete.");
 
   // Configure the status LED pin as an output
   pinMode(STATUS_LED_PIN, OUTPUT);
 
-  Serial.println("Ambilight system started.");
+  // Initialize the LED driver
   
-  // Create the Blink task
+
+
+
+  //Task Example
+
+  //Create the Blink task
   //xTaskCreate(
   //  BlinkTask,          /* Task function */
   //  "BlinkTask",        /* Name of the task */
@@ -27,18 +47,24 @@ void setup() {
   //  1,                  /* Priority of the task */
   //  NULL);              /* Task handle */
   // Create the Blink task
+  // Create the Blink task
   xTaskCreate(BlinkTask, "BlinkTask", 1000, NULL, 1, NULL);
 
   // Create the Serial task
-  xTaskCreate(SerialComm::SerialTask, "SerialTask", 1000, NULL, 1, NULL); // Notice the change here
+  xTaskCreate(SerialComm::SerialTask, "SerialTask", 3000, NULL, 1, NULL);
 }
 
-
-
+/**
+ * @brief The loop function is empty as the system is event-driven.
+ */
 void loop() {
 
 }
 
+/**
+ * @brief The BlinkTask function is a FreeRTOS task that toggles the status LED on and off every second.
+ * @param pvParameters The task parameters (not used in this case).
+ */
 void BlinkTask(void *pvParameters) {
   (void) pvParameters;
   for (;;) {
