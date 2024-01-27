@@ -3,14 +3,15 @@
 
 #include <Arduino.h>
 #include "pin_def.h"
-#include "led_driver.h"
+
 
 class SerialComm {
 public:
     SerialComm(unsigned long baudRate);
     void init();
-    static void SerialTask(void *pvParameters); // Make SerialTask a static member function
+    static void SerialTask(void *pvParameters); // serial communications freeRTOS function
     static void debugPrint(const String &message); // Method for conditional debug messages
+    void initMessage();
 
 private:
     unsigned long _baudRate;

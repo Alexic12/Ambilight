@@ -4,6 +4,8 @@
 #include <Arduino.h>
 #include <FastLED.h>
 #include "pin_def.h"
+#include "color_def.h"
+#include "serial_comm.h"
 
 class LedDriver {
 public:
@@ -14,25 +16,8 @@ public:
     static void setAllCRGB(CRGB color);
     static void rainbowCascade(int wait);
     static void fadeToColor(CRGB targetColor, int steps, int wait);
-    static void movingRainbow(int wait, int rainbowDelta);
-    static void LedTask(void *pvParameters); // Simplified to a single declaration
-
-    enum class LedAnimation {
-        NONE,
-        RED_FADE,
-        GREEN_FADE,
-        BLUE_FADE,
-        UV_FADE,
-        VIOLET_FADE,
-        RAINBOW_CASCADE,
-        MOVING_RAINBOW,
-        OFF
-    };
-    
-    
-private:
-    
-    LedAnimation currentAnimation = LedAnimation::NONE;
+    static void movingRainbow(int wait, int rainbowDelta); 
+    static void LedTask(void *pvParameters); //freeRTOS task function for LedDriver
     
     
 };

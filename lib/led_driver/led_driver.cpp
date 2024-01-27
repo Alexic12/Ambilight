@@ -2,6 +2,7 @@
 
 CRGB leds[NUM_LEDS];
 extern String currentCommand;
+extern SerialComm S;
 
 LedDriver::LedDriver() {
     // Constructor
@@ -12,6 +13,7 @@ void LedDriver::init() {
     FastLED.setBrightness(50); // Set initial brightness (0-255)
     FastLED.clear(); // Clear any initial data
     FastLED.show(); // Update the strip
+    //S.debugPrint("Color map size: " + int(colorMapSize)); // Print the size of the color map (defined in color_def.h)
 }
 
 void LedDriver::setAllCRGB(CRGB color) {
@@ -61,29 +63,86 @@ void LedDriver::movingRainbow(int wait, int rainbowDelta) {
 
 void LedDriver::LedTask(void *pvParameters) {
     (void) pvParameters;
+    S.debugPrint("LedTask started."); // Use debugPrint here
     for (;;) {
+        // Map command string to animation type and set it
         if (currentCommand.equals("RED")) {
-            // Set LED strip to RED
-            setAllCRGB(CRGB::Red);
+            fadeToColor(CRGB::Red, 50, 100);
         } else if (currentCommand.equals("GREEN")) {
-            setAllCRGB(CRGB::Green);
+            fadeToColor(CRGB::Green, 50, 100);
         } else if (currentCommand.equals("BLUE")) {
-            setAllCRGB(CRGB::Blue);
-        } else if (currentCommand.equals("UV")) {
-            setAllCRGB(CRGB::Purple);
-        } else if (currentCommand.equals("VIOLET")) {
-            setAllCRGB(CRGB::Violet);
-        } else if (currentCommand.equals("RAINBOW")) {
+            fadeToColor(CRGB::Blue, 50, 100);
+        } else if (currentCommand.equals("YELLOW")) {
+            fadeToColor(CRGB::Yellow, 50, 100);
+        } else if (currentCommand.equals("ORANGE")) {
+            fadeToColor(CRGB::Orange, 50, 100);
+        } else if (currentCommand.equals("PURPLE")) {
+            fadeToColor(CRGB::Purple, 50, 100);
+        } else if (currentCommand.equals("AMETHYST")) {
+            fadeToColor(CRGB::Amethyst, 50, 100);
+        } else if (currentCommand.equals("AQUA")) {
+            fadeToColor(CRGB::Aqua, 50, 100);
+        } else if (currentCommand.equals("AZURE")) {
+            fadeToColor(CRGB::Azure, 50, 100);
+        } else if (currentCommand.equals("BLACK")) {
+            fadeToColor(CRGB::Black, 50, 100);
+        } else if (currentCommand.equals("BLUEVIOLET")) {
+            fadeToColor(CRGB::BlueViolet, 50, 100);
+        } else if (currentCommand.equals("CHARTREUSE")) {
+            fadeToColor(CRGB::Chartreuse, 50, 100);
+        } else if (currentCommand.equals("CORAL")) {
+            fadeToColor(CRGB::Coral, 50, 100);
+        } else if (currentCommand.equals("CYAN")) {
+            fadeToColor(CRGB::Cyan, 50, 100);
+        }else if (currentCommand.equals("DARKBLUE")) {
+            fadeToColor(CRGB::DarkBlue, 50, 100);
+        } else if (currentCommand.equals("DARKCYAN")) {
+            fadeToColor(CRGB::DarkCyan, 50, 100);
+        } else if (currentCommand.equals("DARKGREEN")) {
+            fadeToColor(CRGB::DarkGreen, 50, 100);
+        } else if (currentCommand.equals("DARKORANGE")) {
+            fadeToColor(CRGB::DarkOrange, 50, 100);
+        } else if (currentCommand.equals("DARKRED")) {
+            fadeToColor(CRGB::DarkRed, 50, 100);
+        } else if (currentCommand.equals("DEEPSKYBLUE")) {
+            fadeToColor(CRGB::DeepSkyBlue, 50, 100);
+        } else if (currentCommand.equals("DODGERBLUE")) {
+            fadeToColor(CRGB::DodgerBlue, 50, 100);
+        } else if (currentCommand.equals("FIREBRICK")) {
+            fadeToColor(CRGB::FireBrick, 50, 100);
+        } else if (currentCommand.equals("FUCHSIA")) {
+            fadeToColor(CRGB::Fuchsia, 50, 100);
+        } else if (currentCommand.equals("GOLD")) {
+            fadeToColor(CRGB::Gold, 50, 100);
+        } else if (currentCommand.equals("GOLDENROD")) {
+            fadeToColor(CRGB::Goldenrod, 50, 100);
+        } else if (currentCommand.equals("GRAY")) {
+            fadeToColor(CRGB::Gray, 50, 100);
+        } else if (currentCommand.equals("GREENYELLOW")) {
+            fadeToColor(CRGB::GreenYellow, 50, 100);
+        } else if (currentCommand.equals("HOTPINK")) {
+            fadeToColor(CRGB::HotPink, 50, 100);
+        } else if (currentCommand.equals("INDIANRED")) {
+            fadeToColor(CRGB::IndianRed, 50, 100);
+        } else if (currentCommand.equals("INDIGO")) {
+            fadeToColor(CRGB::Indigo, 50, 100);
+        } else if (currentCommand.equals("LAVENDER")) {
+            fadeToColor(CRGB::Lavender, 50, 100);
+        } else if (currentCommand.equals("LIGHTBLUE")) {
+            fadeToColor(CRGB::LightBlue, 50, 100);
+        } else if (currentCommand.equals("LIGHTCORAL")) {
+            fadeToColor(CRGB::LightCoral, 50, 100);
+        }
+        // Add special patterns here
+        else if (currentCommand.equals("RAINBOW")) {
             rainbowCascade(10);
         } else if (currentCommand.equals("MOV_RAINBOW")) {
             movingRainbow(10, 5);
-        } else if (currentCommand.equals("OFF")) {
-            setAllCRGB(CRGB::Black);
-        } else {
-            // Do nothing
+        }else if(currentCommand.equals("OFF")){
+            fadeToColor(CRGB::Black, 50, 100);
         }
 
-        vTaskDelay(pdMS_TO_TICKS(100)); // Adjust delay as needed
+        vTaskDelay(pdMS_TO_TICKS(10)); // Adjust delay as needed
     }
 }
 

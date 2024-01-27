@@ -13,6 +13,13 @@ void SerialComm::init() {
     
     //while (!Serial); // Optionally wait for the serial port to connect - necessary for some devices
 }
+void SerialComm::initMessage() {
+    Serial.println("Ambilight System Initializing...");
+    delay(500);
+    Serial.println("-----------------------------");
+    Serial.println("Debug mode: ON");
+    Serial.println("System initialization complete!");
+}
 
 // Static member function for handling serial communication
 void SerialComm::SerialTask(void *pvParameters) {
@@ -27,27 +34,12 @@ void SerialComm::SerialTask(void *pvParameters) {
             debugPrint("Received command: " + incomingData); // Use debugPrint
 
             // Map command string to animation type and set it
-            if (incomingData.equals("TEST")) {
-                debugPrint("OK");
-            } else if (incomingData.equals("RED")) {
-                currentCommand = "RED"; // Set the global variable
-            } else if (incomingData.equals("GREEN")) {
-                currentCommand = "GREEN";
-            } else if (incomingData.equals("BLUE")) {
-                currentCommand = "BLUE";
-            } else if (incomingData.equals("UV")) {
-                currentCommand = "UV";
-            } else if (incomingData.equals("VIOLET")) {
-                currentCommand = "VIOLET";
-            } else if (incomingData.equals("RAINBOW")) {
-                currentCommand = "RAINBOW";
-            } else if (incomingData.equals("MOV_RAINBOW")) {
-                currentCommand = "MOV_RAINBOW";
-            } else if (incomingData.equals("OFF")) {
-                currentCommand = "OFF";
+            if (incomingData.equals("PING")) {
+                debugPrint("I'M ALIVE!");
             } else {
-                debugPrint("Command not recognized."); // Use debugPrint for additional feedback
+                currentCommand = incomingData;
             }
+
         }
         vTaskDelay(pdMS_TO_TICKS(10)); // Small delay to prevent task from hogging CPU time
     }
