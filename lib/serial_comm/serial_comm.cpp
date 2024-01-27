@@ -35,9 +35,9 @@ void SerialComm::SerialTask(void *pvParameters) {
                 debugPrint("GREEN");
                 ledDriver.setAllCRGB(CRGB::Green);
             
-            }else if(incomingData.equals("BLUE")){
+            }else if(incomingData.equals("AME")){
                 debugPrint("BLUE");
-                ledDriver.setAllCRGB(CRGB::Blue);
+                ledDriver.setAllCRGB(CRGB::Amethyst);
             }else {
                 debugPrint("Command not recognized."); // Use debugPrint for additional feedback
             }
