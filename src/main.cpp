@@ -46,7 +46,7 @@ void setup() {
   //  NULL);              /* Task handle */
   ////////////////////////
   // Create the Blink task
-  xTaskCreate(BlinkTask, "BlinkTask", 1000, NULL, 2, NULL);
+  //xTaskCreate(BlinkTask, "BlinkTask", 1000, NULL, 2, NULL);
 
   // Create the Serial task
   xTaskCreate(SerialComm::SerialTask, "SerialTask", 2000, NULL, 1, NULL);

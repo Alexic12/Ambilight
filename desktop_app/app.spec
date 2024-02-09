@@ -5,7 +5,7 @@ block_cipher = None
 # Include pyserial as a hidden import
 hidden_imports = ['pyserial','pyqt5','time', 'sys']
 
-a = Analysis(['ambilight.py'],
+a = Analysis(['ambilight_V2.py'],
              pathex=[''],
              binaries=[],
              datas=[],
@@ -28,7 +28,7 @@ exe = EXE(pyz,
           a.datas,
           [],
           exclude_binaries=True,
-          name='Ambilight',
+          name='Ambilight_V2',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
@@ -44,4 +44,4 @@ coll = COLLECT(exe,
                strip=False,
                upx=True,
                upx_exclude=[],
-               name='Ambilight')
+               name='Ambilight_V2')

@@ -34,7 +34,9 @@ void SerialComm::SerialTask(void *pvParameters) {
             debugPrint("Received command: " + incomingData); // Use debugPrint
 
             // Map command string to animation type and set it
-            if (incomingData.equals("PING")) {
+            if (incomingData.equals("DEVICE")) {
+                debugPrint("AMBILIGHT");
+            }else if (incomingData.equals("PING")) {
                 debugPrint("I'M ALIVE!");
             } else {
                 currentCommand = incomingData;
